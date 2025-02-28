@@ -1,14 +1,41 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsyfep1odrxje"]
+[gd_scene load_steps=3 format=3 uid="uid://dsyfep1odrxje"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Ground.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bhl6k43kp41vq" path="res://scenes/Ground.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://ybb2otr8y65g" path="res://scenes/plane1.tscn" id="2_bgxa4"]
 
 [node name="Root" type="Node2D"]
 
 [node name="Ground" parent="." instance=ExtResource("1")]
-position = Vector2(507.708, 363.86)
+position = Vector2(559.758, 565.806)
 
 [node name="Ground2" parent="." instance=ExtResource("1")]
-position = Vector2(789.149, 294.054)
+position = Vector2(841.199, 496)
 
 [node name="Ground3" parent="." instance=ExtResource("1")]
-position = Vector2(225.95, 294.562)
+position = Vector2(278, 496.508)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_bgxa4")]
+position = Vector2(164, 280)
+scale = Vector2(3.5265, 3.5265)
+
+[node name="dash_timer" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.2
+
+[node name="double_press_timer" type="Timer" parent="CharacterBody2D"]
+
+[node name="dash_again_timer" type="Timer" parent="CharacterBody2D"]
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("2_bgxa4")]
+visible = false
+position = Vector2(147.854, 258.481)
+scale = Vector2(5, 5)
+
+[node name="dash_timer" type="Timer" parent="CharacterBody2D2"]
+
+[node name="double_press_timer" type="Timer" parent="CharacterBody2D2"]
+
+[node name="dash_again_timer" type="Timer" parent="CharacterBody2D2"]
+
+[connection signal="timeout" from="CharacterBody2D/dash_timer" to="CharacterBody2D" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="CharacterBody2D/double_press_timer" to="CharacterBody2D" method="_on_double_press_timer_timeout"]
+[connection signal="timeout" from="CharacterBody2D/dash_again_timer" to="CharacterBody2D" method="_on_dash_again_timer_timeout"]
