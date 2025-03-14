@@ -3,6 +3,11 @@ extends CharacterBody2D
 @export var gravity = 600
 @export var walk_speed = 200
 @export var jump_speed = -400
+@onready var anim := $Sprite2D
+
+@onready var character_area = $CharacterArea
+
+const UP = Vector2(0, -1)
 
 var jump_count = 0
 var dash_speed = 600
@@ -26,12 +31,13 @@ func _physics_process(delta):
 	
 	# move right and left
 	var direction = Input.get_axis("ui_left", "ui_right")
+	var animation = "idle"
 	
 	if Input.is_action_pressed("ui_left"):
-		$Sprite2D.flip_h = true
+		animation = "walk_left"
 		check_double_tap("ui_left")
 	elif Input.is_action_pressed("ui_right"):
-		$Sprite2D.flip_h = false
+		animation = "walk_right"
 		check_double_tap("ui_right")
 	else:
 		pass
@@ -52,6 +58,9 @@ func _physics_process(delta):
 			velocity.x = direction * walk_speed
 		else:
 			velocity.x = 0
+			
+	if anim.animation != animation:
+		anim.play(animation)
 			
 	move_and_slide()
 

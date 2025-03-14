@@ -1,21 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsyfep1odrxje"]
+[gd_scene load_steps=9 format=3 uid="uid://dsyfep1odrxje"]
 
 [ext_resource type="PackedScene" uid="uid://bhl6k43kp41vq" path="res://scenes/Ground.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://7ddp7cnkpue1" path="res://assets/Free-Sky-with-Clouds-Background-Pixel-Art3.jpg" id="1_vrwj2"]
 [ext_resource type="PackedScene" uid="uid://ybb2otr8y65g" path="res://scenes/plane1.tscn" id="2_bgxa4"]
+[ext_resource type="AudioStream" uid="uid://ypk8cs1afynm" path="res://assets/audio/06 Kokiri Forest.mp3" id="3_bfx1h"]
+[ext_resource type="PackedScene" uid="uid://bhyhorfj2vi50" path="res://scenes/chest.tscn" id="3_lwy68"]
+[ext_resource type="Texture2D" uid="uid://b68jl37at5b4g" path="res://assets/snow.png" id="4_fey57"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m0hin"]
+resource_name = "mimi"
+texture = ExtResource("4_fey57")
+texture_region_size = Vector2i(128, 128)
+
+[sub_resource type="TileSet" id="TileSet_jyy48"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/3 = SubResource("TileSetAtlasSource_m0hin")
 
 [node name="Root" type="Node2D"]
 
-[node name="Ground" parent="." instance=ExtResource("1")]
-position = Vector2(559.758, 565.806)
+[node name="Free-sky-with-clouds-background-pixel-art3" type="Sprite2D" parent="."]
+position = Vector2(572, 312)
+scale = Vector2(0.693333, 0.693333)
+texture = ExtResource("1_vrwj2")
 
 [node name="Ground2" parent="." instance=ExtResource("1")]
 position = Vector2(841.199, 496)
 
+[node name="Ground4" parent="." instance=ExtResource("1")]
+position = Vector2(563, 282)
+
 [node name="Ground3" parent="." instance=ExtResource("1")]
 position = Vector2(278, 496.508)
 
+[node name="Ground5" parent="." instance=ExtResource("1")]
+position = Vector2(563, 126)
+
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_bgxa4")]
-position = Vector2(164, 280)
+position = Vector2(465, 204)
 scale = Vector2(3.5265, 3.5265)
 
 [node name="dash_timer" type="Timer" parent="CharacterBody2D"]
@@ -35,6 +57,22 @@ scale = Vector2(5, 5)
 [node name="double_press_timer" type="Timer" parent="CharacterBody2D2"]
 
 [node name="dash_again_timer" type="Timer" parent="CharacterBody2D2"]
+
+[node name="Chest2" parent="." instance=ExtResource("3_lwy68")]
+position = Vector2(563, 222)
+scale = Vector2(2.64, 2.64)
+
+[node name="Chest3" parent="." instance=ExtResource("3_lwy68")]
+position = Vector2(973, 437)
+scale = Vector2(2.64, 2.64)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(0.5, 0.5)
+tile_set = SubResource("TileSet_jyy48")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_bfx1h")
+autoplay = true
 
 [connection signal="timeout" from="CharacterBody2D/dash_timer" to="CharacterBody2D" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/double_press_timer" to="CharacterBody2D" method="_on_double_press_timer_timeout"]
